@@ -21,7 +21,7 @@ const Home = () => {
       <section
         className="relative h-screen flex items-center justify-center"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHwxfHxmb29kJTIwZmxhdGxheXxlbnwwfHx8fDE3NzI5MjYyNTB8MA&ixlib=rb-4.1.0&q=85)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1665400808116-f0e6339b7e9a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwyfHxhZnJpY2FuJTIwZm9vZHxlbnwwfHx8fDE3NzI5MjYyMzh8MA&ixlib=rb-4.1.0&q=85)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed'
