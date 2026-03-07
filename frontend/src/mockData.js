@@ -17,7 +17,7 @@ export const menuItems = [
     category: "Bulk/Trays",
     description: "Colorful fried rice with mixed vegetables, liver, and authentic Nigerian flavors",
     price: 70,
-    image: "https://images.unsplash.com/photo-1603496987674-79600a000f55?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwyfHxuaWdlcmlhbiUyMGZvb2R8ZW58MHx8fHwxNzcyOTI2MjU1fDA&ixlib=rb-4.1.0&q=85",
+    image: "https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/v22l474p_image.png",
     sizes: ["Small", "Medium", "Large"],
     popular: true
   },
@@ -52,44 +52,14 @@ export const menuItems = [
     popular: false
   },
   {
-    id: 6,
-    name: "Peppered Chicken",
-    category: "Finger Foods",
-    description: "Succulent chicken pieces in spicy pepper sauce",
-    price: 70,
-    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHw0fHxhZnJpY2FuJTIwZm9vZHxlbnwwfHx8fDE3NzI5MjYyMzh8MA&ixlib=rb-4.1.0&q=85",
-    sizes: ["Small", "Medium", "Large"],
-    popular: true
-  },
-  {
-    id: 7,
-    name: "Suya Skewers",
-    category: "Finger Foods",
-    description: "Grilled meat skewers with authentic suya spice blend",
-    price: 50,
-    image: "https://images.pexels.com/photos/28160385/pexels-photo-28160385.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    sizes: ["Small", "Medium", "Large"],
-    popular: true
-  },
-  {
     id: 8,
     name: "Puff Puff",
     category: "Finger Foods",
     description: "Sweet deep-fried dough balls, perfect as a snack or dessert",
     price: 30,
-    image: "https://images.pexels.com/photos/20434731/pexels-photo-20434731.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    image: "https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/r0t08rer_image.png",
     sizes: ["Small", "Medium"],
-    popular: false
-  },
-  {
-    id: 9,
-    name: "Pepper Sauce",
-    category: "Sauces",
-    description: "Homemade spicy pepper sauce perfect for any dish",
-    price: 25,
-    image: "https://images.unsplash.com/photo-1661588669110-81142a5b9e57?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwzfHxuaWdlcmlhbiUyMGZvb2R8ZW58MHx8fHwxNzcyOTI2MjU1fDA&ixlib=rb-4.1.0&q=85",
-    sizes: ["Small", "Large"],
-    popular: false
+    popular: true
   },
   {
     id: 10,
@@ -97,7 +67,7 @@ export const menuItems = [
     category: "Sides",
     description: "Sweet fried plantains, the perfect side dish",
     price: 15,
-    image: "https://images.unsplash.com/photo-1665400808116-f0e6339b7e9a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTJ8MHwxfHNlYXJjaHwyfHxhZnJpY2FuJTIwZm9vZHxlbnwwfHx8fDE3NzI5MjYyMzh8MA&ixlib=rb-4.1.0&q=85",
+    image: "https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/d5fn85ag_image.png",
     sizes: ["Small", "Large"],
     popular: true
   }
