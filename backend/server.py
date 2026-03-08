@@ -14,10 +14,17 @@ from datetime import datetime, timezone
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
-mongo_url = os.environ['MONGO_URL']
+# MongoDB connection - require env in production; allow defaults for dev
+mongo_url = os.environ.get('MONGO_URL')
+db_name = os.environ.get('DB_NAME')
+if not mongo_url or not db_name:
+    if os.environ.get('ENV') == 'production':
+        raise SystemExit('MONGO_URL and DB_NAME must be set in production')
+    mongo_url = mongo_url or 'mongodb://localhost:27017'
+    db_name = db_name or 'adukes_kitchen_db'
+
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db = client[db_name]
 
 # Create the main app without a prefix
 app = FastAPI()
@@ -59,20 +66,31 @@ async def get_status_checks():
     # Exclude MongoDB's _id field from the query results
     status_checks = await db.status_checks.find({}, {"_id": 0}).to_list(1000)
     
-    # Convert ISO string timestamps back to datetime objects
+    # Convert ISO string timestamps back to datetime objects; default if missing or unparseable
     for check in status_checks:
-        if isinstance(check['timestamp'], str):
-            check['timestamp'] = datetime.fromisoformat(check['timestamp'])
+        if 'timestamp' not in check:
+            check['timestamp'] = datetime.now(timezone.utc)
+        elif isinstance(check['timestamp'], str):
+            try:
+                check['timestamp'] = datetime.fromisoformat(check['timestamp'])
+            except (ValueError, TypeError):
+                check['timestamp'] = datetime.now(timezone.utc)
     
     return status_checks
 
 # Include the router in the main app
 app.include_router(api_router)
 
+# CORS: normalize origins (strip, drop empty); default to allow all if empty
+_cors_raw = os.environ.get('CORS_ORIGINS', '*')
+_cors_origins = [o.strip() for o in _cors_raw.split(',') if o.strip()]
+if not _cors_origins:
+    _cors_origins = ['*']
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=_cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -83,6 +101,17 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+
+@app.on_event("startup")
+async def startup_db_validation():
+    """Verify MongoDB is reachable at startup."""
+    try:
+        await client.admin.command('ping')
+    except Exception as e:
+        logger.error("MongoDB connection failed at startup: %s", e)
+        raise
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
