@@ -1,12 +1,11 @@
 import React from 'react';
-import { Award, Heart, Users, Clock } from 'lucide-react';
+import { Award, Heart, Users } from 'lucide-react';
 import { Card, CardContent } from '../components/ui/card';
 import { aboutContent } from '../mockData';
 
 const About = () => {
   const stats = [
     { icon: Users, label: 'Happy Customers', value: '500+' },
-    { icon: Clock, label: 'Years Experience', value: '5+' },
     { icon: Award, label: 'Dishes Served', value: '10,000+' },
     { icon: Heart, label: 'Five Star Reviews', value: '200+' }
   ];
@@ -35,12 +34,12 @@ const About = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Stats Section */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-20">
           {stats.map((stat, index) => {
             const IconComponent = stat.icon;
             return (
               <Card key={index} className="text-center hover:shadow-xl transition-shadow duration-300">
-                <CardContent className="p-8">
+                <CardContent className="p-4 sm:p-8">
                   <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <IconComponent className="h-8 w-8 text-orange-600" />
                   </div>
@@ -64,8 +63,9 @@ const About = () => {
           <div className="relative h-96 lg:h-auto rounded-2xl overflow-hidden shadow-2xl">
             <img
               src="https://images.unsplash.com/photo-1664992960082-0ea299a9c53e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHxqb2xsb2YlMjByaWNlfGVufDB8fHx8MTc3MjkyNjI0MXww&ixlib=rb-4.1.0&q=85"
-              alt="Aduke's Kitchen"
+              alt="Jollof rice and West African dishes from Aduke's Kitchen"
               className="w-full h-full object-cover"
+              loading="lazy"
             />
           </div>
         </div>

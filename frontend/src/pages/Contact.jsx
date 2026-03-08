@@ -95,7 +95,7 @@ const Contact = () => {
                     <IconComponent className="h-7 w-7 text-orange-600" />
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">{detail.title}</h3>
-                  <div className="text-sm">{content}</div>
+                  <div className="text-sm break-words overflow-hidden">{content}</div>
                 </CardContent>
               </Card>
             );
@@ -111,7 +111,7 @@ const Contact = () => {
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">
                   Send Us a <span className="text-orange-600">Message</span>
                 </h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate aria-label="Contact form">
                   <div>
                     <Label htmlFor="name" className="text-gray-700 font-medium">
                       Name *
@@ -121,6 +121,7 @@ const Contact = () => {
                       name="name"
                       type="text"
                       required
+                      autoComplete="name"
                       value={formData.name}
                       onChange={handleChange}
                       className="mt-2"
@@ -137,6 +138,7 @@ const Contact = () => {
                       name="email"
                       type="email"
                       required
+                      autoComplete="email"
                       value={formData.email}
                       onChange={handleChange}
                       className="mt-2"
@@ -152,6 +154,7 @@ const Contact = () => {
                       id="phone"
                       name="phone"
                       type="tel"
+                      autoComplete="tel"
                       value={formData.phone}
                       onChange={handleChange}
                       className="mt-2"
@@ -177,6 +180,7 @@ const Contact = () => {
                   <Button
                     type="submit"
                     className="w-full bg-orange-600 hover:bg-orange-700 text-white py-6 text-lg"
+                    aria-busy="false"
                   >
                     <Send className="h-5 w-5 mr-2" />
                     Send Message

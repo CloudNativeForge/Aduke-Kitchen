@@ -11,15 +11,23 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App overflow-x-hidden min-h-screen flex flex-col">
+      <a
+        href="#main-content"
+        className="sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:p-4 focus:bg-orange-600 focus:text-white focus:rounded-md focus:w-auto focus:h-auto focus:m-0 focus:overflow-visible focus:[clip:auto] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-600"
+      >
+        Skip to main content
+      </a>
       <BrowserRouter>
         <Navbar />
-        <Routes>
+        <main id="main-content">
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-        </Routes>
+          </Routes>
+        </main>
         <Footer />
         <Toaster />
       </BrowserRouter>

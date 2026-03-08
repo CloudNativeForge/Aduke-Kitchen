@@ -48,18 +48,19 @@ const Menu = () => {
           <div className="flex flex-col lg:flex-row gap-4">
             {/* Search */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" aria-hidden />
               <Input
-                type="text"
+                type="search"
                 placeholder="Search for dishes..."
                 className="pl-10 h-12"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                aria-label="Search menu items"
               />
             </div>
 
-            {/* Category Filter */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0">
+            {/* Category Filter - horizontal scroll on small screens */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0" role="group" aria-label="Filter by category">
               <Filter className="h-5 w-5 text-gray-500 flex-shrink-0" />
               <Button
                 variant={selectedCategory === 'All' ? 'default' : 'outline'}
@@ -94,8 +95,9 @@ const Menu = () => {
               <div className="relative h-64 overflow-hidden">
                 <img
                   src={item.image}
-                  alt={item.name}
+                  alt={`${item.name} - ${item.description}`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  loading="lazy"
                 />
                 {item.popular && (
                   <Badge className="absolute top-4 right-4 bg-orange-600 hover:bg-orange-700">
@@ -109,11 +111,11 @@ const Menu = () => {
                 </div>
               </div>
               <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
+                <div className="flex justify-between items-start gap-2 mb-2 min-w-0">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors truncate min-w-0">
                     {item.name}
                   </h3>
-                  <span className="text-orange-600 font-bold text-lg whitespace-nowrap ml-2">
+                  <span className="text-orange-600 font-bold text-lg whitespace-nowrap flex-shrink-0">
                     ${item.price}
                   </span>
                 </div>
