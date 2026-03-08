@@ -17,18 +17,18 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {/* Hero Section - scroll attachment on mobile to avoid overflow/performance issues */}
       <section
         className="relative h-screen flex items-center justify-center"
         style={{
           backgroundImage: 'url(https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/uury7gjb_image.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'
+          backgroundAttachment: 'scroll'
         }}
       >
         <div className="absolute inset-0 bg-black/60"></div>
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full min-w-0">
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 animate-fade-in">
             TASTE THE AUTHENTIC
             <span className="block text-orange-500 mt-2">AFRICAN EXPERIENCE</span>
@@ -104,8 +104,9 @@ const Home = () => {
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={item.image}
-                    alt={item.name}
+                    alt={`${item.name} - West African dish`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
                   />
                   <div className="absolute top-4 right-4 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                     Popular
