@@ -79,6 +79,7 @@ code {
     }
     body {
         @apply bg-background text-foreground;
+        background-color: #faf8f5; /* warm off-white */
     }
 }
 

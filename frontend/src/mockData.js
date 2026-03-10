@@ -7,6 +7,7 @@ export const menuItems = [
     category: "Bulk/Trays",
     description: "Authentic West African jollof rice cooked to perfection with aromatic spices",
     price: 60,
+    sizePrices: { Small: 50, Medium: 60, Large: 70 },
     image: "https://images.unsplash.com/photo-1666190092689-e3968aa0c32c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHw0fHxqb2xsb2YlMjByaWNlfGVufDB8fHx8MTc3MjkyNjI0MXww&ixlib=rb-4.1.0&q=85",
     sizes: ["Small", "Medium", "Large"],
     popular: true
@@ -17,6 +18,7 @@ export const menuItems = [
     category: "Bulk/Trays",
     description: "Colorful fried rice with mixed vegetables, liver, and authentic Nigerian flavors",
     price: 70,
+    sizePrices: { Small: 60, Medium: 70, Large: 80 },
     image: "https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/v22l474p_image.png",
     sizes: ["Small", "Medium", "Large"],
     popular: true
@@ -27,6 +29,7 @@ export const menuItems = [
     category: "Bulk/Trays",
     description: "Rich melon seed soup with assorted meat and fresh vegetables",
     price: 100,
+    sizePrices: { Small: 85, Medium: 100, Large: 120 },
     image: "https://images.unsplash.com/photo-1763048443535-1243379234e2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwzfHxhZnJpY2FuJTIwc291cHxlbnwwfHx8fDE3NzI5MjYyNjF8MA&ixlib=rb-4.1.0&q=85",
     sizes: ["Small", "Medium", "Large"],
     popular: true
@@ -37,6 +40,7 @@ export const menuItems = [
     category: "Bulk/Trays",
     description: "Traditional Nigerian spinach stew with assorted meat and stockfish",
     price: 100,
+    sizePrices: { Small: 85, Medium: 100, Large: 120 },
     image: "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODB8MHwxfHNlYXJjaHwxfHxuaWdlcmlhbiUyMGZvb2R8ZW58MHx8fHwxNzcyOTI2MjU1fDA&ixlib=rb-4.1.0&q=85",
     sizes: ["Small", "Medium", "Large"],
     popular: false
@@ -47,7 +51,8 @@ export const menuItems = [
     category: "Bulk/Trays",
     description: "Healthy vegetable soup packed with nutrients and traditional flavors",
     price: 90,
-    image: "https://images.unsplash.com/photo-1741026079032-7cb660e44bad?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHw0fHxhZnJpY2FuJTIwc291cHxlbnwwfHx8fDE3NzI5MjYyNjF8MA&ixlib=rb-4.1.0&q=85",
+    sizePrices: { Small: 75, Medium: 90, Large: 105 },
+    image: "/images/vegetable-soup.png",
     sizes: ["Small", "Medium", "Large"],
     popular: false
   },
@@ -57,6 +62,7 @@ export const menuItems = [
     category: "Finger Foods",
     description: "Sweet deep-fried dough balls, perfect as a snack or dessert",
     price: 30,
+    sizePrices: { Small: 25, Medium: 30 },
     image: "https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/r0t08rer_image.png",
     sizes: ["Small", "Medium"],
     popular: true
@@ -67,6 +73,7 @@ export const menuItems = [
     category: "Sides",
     description: "Sweet fried plantains, the perfect side dish",
     price: 15,
+    sizePrices: { Small: 12, Large: 18 },
     image: "https://customer-assets.emergentagent.com/job_adukes-kitchen/artifacts/d5fn85ag_image.png",
     sizes: ["Small", "Large"],
     popular: true

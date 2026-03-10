@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, UtensilsCrossed, Cookie, Soup, ChefHat } from 'lucide-react';
+import { ArrowRight, Star, UtensilsCrossed, Cookie, Soup, ChefHat, ShoppingCart } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { menuItems, categories, testimonials } from '../mockData';
+import { useCart } from '../contexts/CartContext';
+import { ItemDialog } from '../components/ItemDialog';
 
 const Home = () => {
   const popularItems = menuItems.filter(item => item.popular).slice(0, 6);
+  const [dialogItem, setDialogItem] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const openItemDialog = (item) => {
+    setDialogItem(item);
+    setDialogOpen(true);
+  };
 
   const categoryIcons = {
     UtensilsCrossed,
@@ -27,7 +36,7 @@ const Home = () => {
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-stone-900/65"></div>
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 animate-fade-in">
             TASTE THE AUTHENTIC
@@ -40,7 +49,7 @@ const Home = () => {
             <Link to="/menu">
               <Button
                 size="lg"
-                className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-6 text-lg rounded-full group w-full sm:w-auto"
+                className="bg-orange-600 hover:bg-orange-700 active:bg-orange-800 active:scale-[0.98] text-white px-8 py-6 text-lg rounded-full group w-full sm:w-auto transition-all duration-200"
               >
                 View Menu
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -50,7 +59,7 @@ const Home = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-6 text-lg rounded-full w-full sm:w-auto"
+                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 active:bg-white/90 active:scale-[0.98] px-8 py-6 text-lg rounded-full w-full sm:w-auto transition-all duration-200"
               >
                 Order Now
               </Button>
@@ -60,7 +69,7 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-[#f5f0e8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Our Menu Categories</h2>
@@ -70,18 +79,19 @@ const Home = () => {
             {categories.map((category) => {
               const IconComponent = categoryIcons[category.icon];
               return (
-                <Card
-                  key={category.id}
-                  className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border-2 hover:border-orange-500"
-                >
-                  <CardContent className="p-8 text-center">
-                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-600 transition-colors">
-                      <IconComponent className="h-8 w-8 text-orange-600 group-hover:text-white transition-colors" />
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{category.name}</h3>
-                    <p className="text-gray-600 text-sm">{category.description}</p>
-                  </CardContent>
-                </Card>
+                <Link key={category.id} to="/menu">
+                  <Card
+                    className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 active:scale-[0.99] cursor-pointer border-2 hover:border-orange-500"
+                  >
+                    <CardContent className="p-8 text-center">
+                      <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-600 transition-colors">
+                        <IconComponent className="h-8 w-8 text-orange-600 group-hover:text-white transition-colors" />
+                      </div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2">{category.name}</h3>
+                      <p className="text-gray-600 text-sm">{category.description}</p>
+                    </CardContent>
+                  </Card>
+                </Link>
               );
             })}
           </div>
@@ -89,7 +99,7 @@ const Home = () => {
       </section>
 
       {/* Popular Items */}
-      <section className="py-20">
+      <section className="py-20 bg-[#faf8f5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Customer Favorites</h2>
@@ -99,7 +109,8 @@ const Home = () => {
             {popularItems.map((item) => (
               <Card
                 key={item.id}
-                className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+                className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+                onClick={() => openItemDialog(item)}
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
@@ -111,13 +122,17 @@ const Home = () => {
                     Popular
                   </div>
                 </div>
-                <CardContent className="p-6">
+                <CardContent className="p-6" onClick={(e) => e.stopPropagation()}>
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="text-xl font-bold text-gray-900">{item.name}</h3>
                     <span className="text-orange-600 font-bold text-lg">${item.price}</span>
                   </div>
                   <p className="text-gray-600 text-sm mb-4">{item.description}</p>
-                  <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                  <Button
+                    className="w-full bg-orange-600 hover:bg-orange-700 active:bg-orange-800 active:scale-[0.98] text-white transition-all duration-200"
+                    onClick={() => openItemDialog(item)}
+                  >
+                    <ShoppingCart className="h-4 w-4 mr-2 inline-block" />
                     Add to Cart
                   </Button>
                 </CardContent>
@@ -129,7 +144,7 @@ const Home = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white px-8"
+                className="border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white active:bg-orange-700 active:scale-[0.98] px-8 transition-all duration-200"
               >
                 View Full Menu
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -140,7 +155,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-orange-50">
+      <section className="py-20 bg-[#fdf6f0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
@@ -168,17 +183,17 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-orange-600 to-orange-700 text-white">
+      <section className="py-20 bg-gradient-to-br from-amber-600 to-amber-700 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-5xl font-bold mb-6">Ready to Order?</h2>
-          <p className="text-xl mb-8 text-orange-100">
+          <p className="text-xl mb-8 text-amber-100">
             Call us now or visit our menu to place your order
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:+14374105630">
               <Button
                 size="lg"
-                className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-6 text-lg rounded-full w-full sm:w-auto"
+                className="bg-white text-amber-600 hover:bg-amber-50 active:bg-amber-100 px-8 py-6 text-lg rounded-full w-full sm:w-auto transition-colors"
               >
                 Call +1 (437) 410-5630
               </Button>
@@ -187,7 +202,7 @@ const Home = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-orange-600 px-8 py-6 text-lg rounded-full w-full sm:w-auto"
+                className="border-2 border-white text-white hover:bg-white hover:text-amber-600 active:bg-white/90 px-8 py-6 text-lg rounded-full w-full sm:w-auto transition-colors"
               >
                 Browse Menu
               </Button>
@@ -195,6 +210,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <ItemDialog
+        item={dialogItem}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 };

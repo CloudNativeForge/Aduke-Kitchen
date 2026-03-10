@@ -5,13 +5,14 @@ import { Input } from '../components/ui/input';
 import { Badge } from '../components/ui/badge';
 import { Search, Filter, ShoppingCart } from 'lucide-react';
 import { menuItems, categories } from '../mockData';
-import { useToast } from '../hooks/use-toast';
+import { useCart } from '../contexts/CartContext';
+import { ItemDialog } from '../components/ItemDialog';
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [cart, setCart] = useState([]);
-  const { toast } = useToast();
+  const [dialogItem, setDialogItem] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const filteredItems = menuItems.filter((item) => {
     const matchesCategory =
@@ -22,12 +23,9 @@ const Menu = () => {
     return matchesCategory && matchesSearch;
   });
 
-  const addToCart = (item) => {
-    setCart([...cart, item]);
-    toast({
-      title: "Added to cart!",
-      description: `${item.name} has been added to your cart.`,
-    });
+  const openItemDialog = (item) => {
+    setDialogItem(item);
+    setDialogOpen(true);
   };
 
   return (
@@ -64,7 +62,7 @@ const Menu = () => {
               <Button
                 variant={selectedCategory === 'All' ? 'default' : 'outline'}
                 onClick={() => setSelectedCategory('All')}
-                className={selectedCategory === 'All' ? 'bg-orange-600 hover:bg-orange-700' : ''}
+                className={selectedCategory === 'All' ? 'bg-orange-600 hover:bg-orange-700 active:bg-orange-800' : 'hover:bg-gray-50 active:bg-gray-100'}
               >
                 All
               </Button>
@@ -73,8 +71,8 @@ const Menu = () => {
                   key={category.id}
                   variant={selectedCategory === category.name ? 'default' : 'outline'}
                   onClick={() => setSelectedCategory(category.name)}
-                  className={`whitespace-nowrap ${
-                    selectedCategory === category.name ? 'bg-orange-600 hover:bg-orange-700' : ''
+                  className={`whitespace-nowrap transition-colors ${
+                    selectedCategory === category.name ? 'bg-orange-600 hover:bg-orange-700 active:bg-orange-800' : 'hover:bg-gray-50 active:bg-gray-100'
                   }`}
                 >
                   {category.name}
@@ -89,7 +87,8 @@ const Menu = () => {
           {filteredItems.map((item) => (
             <Card
               key={item.id}
-              className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
+              className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
+              onClick={() => openItemDialog(item)}
             >
               <div className="relative h-64 overflow-hidden">
                 <img
@@ -108,7 +107,7 @@ const Menu = () => {
                   </Badge>
                 </div>
               </div>
-              <CardContent className="p-6">
+              <CardContent className="p-6" onClick={(e) => e.stopPropagation()}>
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
                     {item.name}
@@ -126,8 +125,11 @@ const Menu = () => {
                   ))}
                 </div>
                 <Button
-                  className="w-full bg-orange-600 hover:bg-orange-700 text-white group"
-                  onClick={() => addToCart(item)}
+                  className="w-full bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white group transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openItemDialog(item);
+                  }}
                 >
                   <ShoppingCart className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform" />
                   Add to Cart
@@ -146,6 +148,11 @@ const Menu = () => {
           </div>
         )}
       </div>
+      <ItemDialog
+        item={dialogItem}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 };

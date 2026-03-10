@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Search, User, Phone } from 'lucide-react';
 import { Button } from './ui/button';
+import { useCart } from '../contexts/CartContext';
+import { CartSheet } from './CartSheet';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const location = useLocation();
+  const { cartCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,29 +68,30 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="hover:bg-orange-50 hover:text-orange-600 transition-colors"
+              className="hover:bg-orange-50 hover:text-orange-600 active:bg-orange-100 active:text-orange-700 transition-colors"
             >
               <Search className="h-5 w-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="hover:bg-orange-50 hover:text-orange-600 transition-colors"
+              className="hover:bg-orange-50 hover:text-orange-600 active:bg-orange-100 active:text-orange-700 transition-colors"
             >
               <User className="h-5 w-5" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              className="hover:bg-orange-50 hover:text-orange-600 transition-colors relative"
+              onClick={() => setCartOpen(true)}
+              className="hover:bg-orange-50 hover:text-orange-600 active:bg-orange-100 active:text-orange-700 transition-colors relative"
             >
               <ShoppingCart className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                0
+                {cartCount}
               </span>
             </Button>
             <a href="tel:+14374105630">
-              <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+              <Button className="bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white transition-colors">
                 <Phone className="h-4 w-4 mr-2" />
                 Order Now
               </Button>
@@ -95,7 +100,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
@@ -125,9 +130,20 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
+            <button
+              type="button"
+              className="flex items-center gap-2 w-full text-base font-medium text-gray-700 hover:text-orange-600 transition-colors py-2"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setCartOpen(true);
+              }}
+            >
+              <ShoppingCart className="h-5 w-5" />
+              Cart {cartCount > 0 && `(${cartCount})`}
+            </button>
             <div className="pt-4 space-y-3">
               <a href="tel:+14374105630" className="block">
-                <Button className="w-full bg-orange-600 hover:bg-orange-700 text-white">
+                <Button className="w-full bg-orange-600 hover:bg-orange-700 active:bg-orange-800 text-white transition-colors">
                   <Phone className="h-4 w-4 mr-2" />
                   Order Now
                 </Button>
@@ -136,6 +152,8 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      <CartSheet open={cartOpen} onOpenChange={setCartOpen} />
     </nav>
   );
 };
