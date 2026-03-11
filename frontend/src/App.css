@@ -50,3 +50,27 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #b45309;
 }
+
+/* Contact section – modern icon wrappers */
+.contact-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    margin: 0 auto 1rem;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, rgba(234, 88, 12, 0.12) 0%, rgba(234, 88, 12, 0.06) 100%);
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.08);
+}
+.contact-icon-wrap svg {
+    transition: transform 0.3s ease;
+}
+.contact-card:hover .contact-icon-wrap {
+    background: linear-gradient(135deg, rgba(234, 88, 12, 0.18) 0%, rgba(234, 88, 12, 0.1) 100%);
+    box-shadow: 0 6px 20px rgba(234, 88, 12, 0.12);
+}
+.contact-card:hover .contact-icon-wrap svg {
+    transform: scale(1.06);
+}
